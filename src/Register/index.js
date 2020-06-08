@@ -11,10 +11,11 @@ import {
     CardHeader,
     MenuItem,
 } from '@material-ui/core'
-import Background from '../images/background.jpeg'
+import Background from '../images/background.jpg'
+import AvailityLogo from '../images/availity-logo.png'
 var UsaStates = require('usa-states').UsaStates;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         backgroundImage: `url(${Background})`,
         position: 'fixed',
@@ -25,11 +26,27 @@ const useStyles = makeStyles(() => ({
     },
     registerCard: {
         width: '30%',
+        [theme.breakpoints.down('sm')]: {
+           width: '80%'
+        },
     },
     outterGrid: {
         display: 'flex',
         alignItems: 'center',
         height: '100%',
+    },
+    logo: {
+        height: '50px',
+        backgroundColor: '#616162',
+        backgroundImage: `url(${AvailityLogo})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        fontSize: '34px',
+        color: 'lightgrey',
+        paddingLeft: '50px',
+        [theme.breakpoints.only('md')]: {
+            backgroundImage: 'none'
+        },
     }
 }));
 
@@ -101,7 +118,11 @@ const Register = () => {
                             className={classes.registerCard}
                             maxWidth={false}
                         >
-                        <CardHeader title="Register" />
+                                <CardHeader
+                                    title="Register with Availity"
+                                    className={classes.logo}
+                        >
+                        </CardHeader>
                             <CardContent>
                                 <Form>
                                     <Grid>
@@ -116,7 +137,7 @@ const Register = () => {
                                             margin="normal"
                                             fullWidth
                                         />
-                                        </Grid>
+                                    </Grid>
                                     <Grid>
                                         <TextField
                                             error={errors.lastName && touched.lastName}
@@ -156,29 +177,44 @@ const Register = () => {
                                             fullWidth
                                             />
                                     </Grid>
-                                        <Grid >
+                                        <Grid item
+                                        direction="row"
+                                            justify="center"
+                                            alignItems="center"
+                                        >
                                             <TextField
-                                            error={errors.state && touched.state}
-                                            helperText={(errors.state && touched.state) && errors.state}
-                                            id="state"
-                                            select
-                                            label="State"
-                                            className={classes.textField}
-                                            value={values.state}
-                                            onChange={handleChange("state")}
-                                            margin="normal"
-                                                fullWidth
-                                                style={{ textAlign: 'left'}}
+                                                error={errors.city && touched.city}
+                                                label="City"
+                                                name="city"
+                                                value={values.city}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                helperText={(errors.city && touched.city) && errors.city}
+                                                margin="normal"
+                                                style={{ width: '48%', paddingRight: '4%'}}
+                                            />
+                                            <TextField
+                                                error={errors.state && touched.state}
+                                                helperText={(errors.state && touched.state) && errors.state}
+                                                id="state"
+                                                name="state"
+                                                select
+                                                label="State"
+                                                className={classes.textField}
+                                                value={values.state}
+                                                onChange={handleChange("state")}
+                                                margin="normal"
+                                                style={{ textAlign: 'center', width: '48%' }}
                                             >
-                                            <MenuItem value="">
-                                                <em>None</em>
-                                            </MenuItem>
-                                            {usStates?.states.map(state => (
-                                                <MenuItem key={state.abbreviation} value={state.abbreviation}>
-                                                    {state.name}
+                                                <MenuItem value="">
+                                                    <em>None</em>
                                                 </MenuItem>
-                                            ))}
-                                        </TextField>
+                                                {usStates?.states.map(state => (
+                                                    <MenuItem key={state.abbreviation} value={state.abbreviation}>
+                                                        {state.name}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
                                     </Grid> 
                                     <Grid>
                                         <TextField
